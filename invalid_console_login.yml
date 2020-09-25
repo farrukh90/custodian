@@ -1,0 +1,33 @@
+policies:
+
+  - name: invalid-ip-address-login-detected
+    resource: account
+    description: |
+      Notifies on invalid external IP console logins
+    mode:
+       type: cloudtrail
+       role: arn:aws:iam::713287746880:role/lambda_admin
+       events:
+          - ConsoleLogin
+    filters:
+      - not:
+          - type: event
+            key: 'detail.sourceIPAddress'
+            value: |
+               '^192\.168\.1\.([1-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-4])$'
+            op: regex
+    actions:
+      - type: notify
+        template: default.html
+        priority_header: 1
+        subject: "Login From Invalid IP Detected - [custodian {{ account }} - {{ region }}]"
+        violation_desc: "A User Has Logged In Externally From A Invalid IP Address Outside The Company's Range:"
+        action_desc: |
+            "Please {{ account_id }} investigate and revoke the invalid session along
+            with any other restrictive actions if appropriate"
+        to:
+          - farrukhsadykov@gmail.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/713287746880/first
+          region: us-east-1

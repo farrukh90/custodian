@@ -1,0 +1,3 @@
+queue_url: https://sqs.us-east-1.amazonaws.com/713287746880/first
+role: arn:aws:iam::713287746880:role/lambda_admin
+from_address: farrukhsadykov@gmail.com

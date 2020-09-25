@@ -1,0 +1,9 @@
+2020-09-21 15:32:09,430 - custodian.policy - INFO - policy:security-groups-unused resource:security-group region:us-east-1 count:1 time:3.89
+2020-09-21 15:32:09,943 - custodian.policy - INFO - policy:security-groups-unused action:delete resources:1 execution_time:0.51
+2020-09-21 15:32:11,151 - custodian.actions - INFO - sent message:e238a8d9-9979-45eb-9451-919836379136 policy:security-groups-unused template:default.html count:1
+2020-09-21 15:32:11,153 - custodian.policy - INFO - policy:security-groups-unused action:notify resources:1 execution_time:1.21
+2020-09-21 15:34:47,707 - custodian.policy - INFO - Provisioning policy lambda: security-groups-unused region: us-east-1
+2020-09-21 15:34:48,429 - custodian.serverless - INFO - Publishing custodian policy lambda function custodian-security-groups-unused
+2020-09-21 15:37:57,495 - custodian.policy - INFO - Provisioning policy lambda: security-groups-unused region: us-east-1
+2020-09-21 15:40:56,483 - custodian.policy - INFO - Provisioning policy lambda: security-groups-unused region: us-east-1
+2020-09-21 15:44:44,273 - custodian.policy - INFO - Provisioning policy lambda: security-groups-unused region: us-east-1

@@ -1,0 +1,21 @@
+[
+  {
+    "QueueArn": "arn:aws:sqs:us-east-1:713287746880:first",
+    "ApproximateNumberOfMessages": "12",
+    "ApproximateNumberOfMessagesNotVisible": "0",
+    "ApproximateNumberOfMessagesDelayed": "0",
+    "CreatedTimestamp": "1600418774",
+    "LastModifiedTimestamp": "1600440376",
+    "VisibilityTimeout": "30",
+    "MaximumMessageSize": "262144",
+    "MessageRetentionPeriod": "345600",
+    "DelaySeconds": "0",
+    "Policy": "{\"Version\":\"2008-10-17\",\"Id\":\"__default_policy_ID\",\"Statement\":[{\"Sid\":\"__owner_statement\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::713287746880:root\"},\"Action\":\"SQS:*\",\"Resource\":\"arn:aws:sqs:us-east-1:713287746880:first\"},{\"Sid\":\"topic-subscription-arn:aws:sns:us-east-1:713287746880:NotifyMe\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Action\":\"SQS:SendMessage\",\"Resource\":\"arn:aws:sqs:us-east-1:713287746880:first\",\"Condition\":{\"ArnLike\":{\"aws:SourceArn\":\"arn:aws:sns:us-east-1:713287746880:NotifyMe\"}}},{\"Sid\":\"topic-subscription-arn:aws:sns:us-west-2:713287746880:dynamodb\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Action\":\"SQS:SendMessage\",\"Resource\":\"arn:aws:sqs:us-east-1:713287746880:first\",\"Condition\":{\"ArnLike\":{\"aws:SourceArn\":\"arn:aws:sns:us-west-2:713287746880:dynamodb\"}}}]}",
+    "ReceiveMessageWaitTimeSeconds": "0",
+    "QueueUrl": "https://queue.amazonaws.com/713287746880/first",
+    "Tags": [],
+    "c7n:MatchedFilters": [
+      "tag:MailerTest"
+    ]
+  }
+]

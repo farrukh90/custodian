@@ -1,0 +1,23 @@
+#This will tag resources that are not tagged properly
+policies:
+  - name: sec-group-auto-tag-ownercontact
+    resource: security-group
+    description: |
+      Triggered when a new Sec Group is Created. Checks to see if
+      it's missing the OwnerContact tag. If missing it gets created
+      with the value of the ID of whomever called the RunInstances API
+    mode:
+      type: cloudtrail
+      role: arn:aws:iam::713287746880:role/lambda_admin
+      events:
+        - source: ec2.amazonaws.com
+          event: AuthorizeSecurityGroupIngress
+          ids: "requestParameters.groupId"
+        - source: ec2.amazonaws.com
+          event: AuthorizeSecurityGroupEgress
+          ids: "requestParameters.groupId"
+    filters:
+     - tag:OwnerContact: absent
+    actions:
+     - type: auto-tag-user
+       tag: OwnerContact

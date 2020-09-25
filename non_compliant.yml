@@ -1,0 +1,24 @@
+#This config finds resources that are not compliant with config rules and emails
+policies:
+  - name: sec-group-non-compliant
+    resource: security-group
+    filters:
+      - type: config-compliance
+        rules: [my_other_config_rule, some_other_rule]
+        states: [NON_COMPLIANT]
+    actions:
+      - type: notify
+        template: default.html
+        priority_header: 1
+        subject: "Unused Security Group Deleted -[custodian {{ account }} - {{ region }}]"
+        violation_desc: "Security Group(s) Which Had Rules Open To The World:"
+        action_desc: |
+            "Actions Taken: The security group has been deleted since it has not been used"
+        to:
+          - farrukhsadykov@gmail.com
+        owner_absent_contact:
+          - farrukhsadykov@gmail.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/713287746880/first
+          region: us-east-1

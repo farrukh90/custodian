@@ -1,0 +1,93 @@
+{
+  "policy": {
+    "name": "c7n-mailer-test",
+    "resource": "sqs",
+    "filters": [
+      {
+        "tag:MailerTest": "absent"
+      }
+    ],
+    "actions": [
+      {
+        "type": "notify",
+        "template": "default",
+        "priority_header": "2",
+        "subject": "testing the c7n mailer",
+        "to": [
+          "farrukhsadykov@gmail.com"
+        ],
+        "transport": {
+          "type": "sqs",
+          "queue": "https://sqs.us-east-1.amazonaws.com/713287746880/first"
+        }
+      }
+    ]
+  },
+  "version": "0.9.6",
+  "execution": {
+    "id": "528d9017-08a5-4699-acd7-9e6b42400490",
+    "start": 1600502941.5220125,
+    "end_time": 1600502943.4092274,
+    "duration": 1.8872148990631104
+  },
+  "config": {
+    "region": "us-east-1",
+    "regions": [
+      "us-east-1"
+    ],
+    "cache": "~/.cache/cloud-custodian.cache",
+    "profile": null,
+    "account_id": "713287746880",
+    "assume_role": null,
+    "external_id": null,
+    "log_group": null,
+    "tracer": null,
+    "metrics_enabled": null,
+    "metrics": null,
+    "output_dir": ".",
+    "cache_period": 15,
+    "dryrun": false,
+    "authorization_file": null,
+    "subparser": "run",
+    "config": null,
+    "configs": [
+      "policy.yml"
+    ],
+    "policy_filters": [],
+    "resource_types": [],
+    "verbose": null,
+    "quiet": null,
+    "debug": false,
+    "skip_validation": false,
+    "command": "c7n.commands.run",
+    "vars": null
+  },
+  "sys-stats": {},
+  "api-stats": {
+    "sqs.ListQueues": 1,
+    "sqs.GetQueueAttributes": 1,
+    "tagging.GetResources": 1,
+    "iam.ListAccountAliases": 1,
+    "sqs.SendMessage": 1
+  },
+  "metrics": [
+    {
+      "MetricName": "ResourceCount",
+      "Timestamp": "2020-09-19T08:09:02.553244",
+      "Value": 1,
+      "Unit": "Count"
+    },
+    {
+      "MetricName": "ResourceTime",
+      "Timestamp": "2020-09-19T08:09:02.553260",
+      "Value": 1.0274767875671387,
+      "Unit": "Seconds"
+    },
+    {
+      "MetricName": "ActionTime",
+      "Timestamp": "2020-09-19T08:09:03.409182",
+      "Value": 0.8546688556671143,
+      "Unit": "Seconds"
+    }
+  ]
+}

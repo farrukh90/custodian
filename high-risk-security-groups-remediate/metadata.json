@@ -1,0 +1,134 @@
+{
+  "policy": {
+    "name": "high-risk-security-groups-remediate",
+    "resource": "security-group",
+    "description": "Remove any rule from a security group that allows 0.0.0.0/0 or ::/0 (IPv6) ingress\nand notify the user  who added the violating rule.\n",
+    "mode": {
+      "type": "cloudtrail",
+      "role": "arn:aws:iam::713287746880:role/lambda_admin",
+      "events": [
+        {
+          "source": "ec2.amazonaws.com",
+          "event": "AuthorizeSecurityGroupIngress",
+          "ids": "requestParameters.groupId"
+        },
+        {
+          "source": "ec2.amazonaws.com",
+          "event": "AuthorizeSecurityGroupEgress",
+          "ids": "requestParameters.groupId"
+        },
+        {
+          "source": "ec2.amazonaws.com",
+          "event": "RevokeSecurityGroupEgress",
+          "ids": "requestParameters.groupId"
+        },
+        {
+          "source": "ec2.amazonaws.com",
+          "event": "RevokeSecurityGroupIngress",
+          "ids": "requestParameters.groupId"
+        }
+      ],
+      "tags": {
+        "custodian-info": "mode=cloudtrail:version=0.9.6"
+      }
+    },
+    "filters": [
+      {
+        "or": [
+          {
+            "type": "ingress",
+            "OnlyPorts": [
+              80,
+              443,
+              6379
+            ],
+            "Cidr": {
+              "value": "0.0.0.0/0"
+            }
+          },
+          {
+            "type": "ingress",
+            "OnlyPorts": [
+              80,
+              443,
+              6379
+            ],
+            "CidrV6": {
+              "value": "::/0"
+            }
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "type": "remove-permissions",
+        "ingress": "matched"
+      },
+      {
+        "type": "notify",
+        "template": "default.html",
+        "priority_header": 1,
+        "subject": "Open Security Group Rule Created-[custodian {{ account }} - {{ region }}]",
+        "violation_desc": "Security Group(s) Which Had Rules Open To The World:",
+        "action_desc": "\"Actions Taken:  The Violating Security Group Rule Has Been Removed As It Typically\nAllows Direct Incoming Public Internet Traffic Access To Your Resource Which Violates Our\nCompany's Cloud Security Policy.  Please Refer To Our Company's Cloud Security Best\nPractices Documentation.  If This Ingress Rule Is Required You May Contact The Security\nTeam To Request An Exception.\"\n",
+        "to": [
+          "farrukhsadykov@gmail.com",
+          "event-owner"
+        ],
+        "transport": {
+          "type": "sqs",
+          "queue": "https://sqs.us-east-1.amazonaws.com/713287746880/first",
+          "region": "us-east-1"
+        }
+      }
+    ]
+  },
+  "version": "0.9.6",
+  "execution": {
+    "id": "de4faf54-fe42-4c5f-aa90-aad0ab8b1c07",
+    "start": 1600703084.3838947,
+    "end_time": 1600703085.7463486,
+    "duration": 1.3624539375305176
+  },
+  "config": {
+    "region": "us-east-1",
+    "regions": [
+      "us-east-1"
+    ],
+    "cache": "~/.cache/cloud-custodian.cache",
+    "profile": null,
+    "account_id": "713287746880",
+    "assume_role": null,
+    "external_id": null,
+    "log_group": null,
+    "tracer": null,
+    "metrics_enabled": null,
+    "metrics": null,
+    "output_dir": ".",
+    "cache_period": 15,
+    "dryrun": false,
+    "authorization_file": null,
+    "subparser": "run",
+    "config": null,
+    "configs": [
+      "policy.yml"
+    ],
+    "policy_filters": [],
+    "resource_types": [],
+    "verbose": null,
+    "quiet": null,
+    "debug": false,
+    "skip_validation": false,
+    "command": "c7n.commands.run",
+    "vars": null
+  },
+  "sys-stats": {},
+  "api-stats": {
+    "lambda.GetFunction": 1,
+    "events.DescribeRule": 1,
+    "lambda.AddPermission": 1,
+    "events.ListTargetsByRule": 1
+  },
+  "metrics": []
+}

@@ -1,0 +1,6 @@
+2020-09-23 11:42:02,957 - custodian.policy - INFO - Provisioning policy lambda: sec-group-auto-tag-ownercontact region: us-east-1
+2020-09-23 11:42:03,413 - custodian.serverless - INFO - Publishing custodian policy lambda function custodian-sec-group-auto-tag-ownercontact
+2020-09-23 11:42:22,928 - custodian.policy - INFO - Provisioning policy lambda: sec-group-auto-tag-ownercontact region: us-east-1
+2020-09-23 11:42:23,330 - custodian.serverless - INFO - Publishing custodian policy lambda function custodian-sec-group-auto-tag-ownercontact
+2020-09-23 11:46:08,885 - custodian.policy - INFO - Provisioning policy lambda: sec-group-auto-tag-ownercontact region: us-east-2
+2020-09-23 11:46:09,444 - custodian.serverless - INFO - Publishing custodian policy lambda function custodian-sec-group-auto-tag-ownercontact

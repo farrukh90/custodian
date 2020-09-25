@@ -1,0 +1,94 @@
+{
+  "policy": {
+    "name": "invalid-ip-address-login-detected",
+    "resource": "account",
+    "description": "Notifies on invalid external IP console logins\n",
+    "mode": {
+      "type": "cloudtrail",
+      "role": "arn:aws:iam::713287746880:role/lambda_admin",
+      "events": [
+        "ConsoleLogin"
+      ],
+      "tags": {
+        "custodian-info": "mode=cloudtrail:version=0.9.6"
+      }
+    },
+    "filters": [
+      {
+        "not": [
+          {
+            "type": "event",
+            "key": "detail.sourceIPAddress",
+            "value": "'^192\\.168\\.1\\.([1-9]|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-4])$'\n",
+            "op": "regex"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "type": "notify",
+        "template": "default.html",
+        "priority_header": 1,
+        "subject": "Login From Invalid IP Detected - [custodian {{ account }} - {{ region }}]",
+        "violation_desc": "A User Has Logged In Externally From A Invalid IP Address Outside The Company's Range:",
+        "action_desc": "\"Please { account_id } investigate and revoke the invalid session along\nwith any other restrictive actions if appropriate\"\n",
+        "to": [
+          "farrukhsadykov@gmail.com"
+        ],
+        "transport": {
+          "type": "sqs",
+          "queue": "https://sqs.us-east-1.amazonaws.com/713287746880/first",
+          "region": "us-east-1"
+        }
+      }
+    ]
+  },
+  "version": "0.9.6",
+  "execution": {
+    "id": "6aec447b-ec8d-45ab-a9c6-e247e6bf837a",
+    "start": 1601038650.5603404,
+    "end_time": 1601038651.774338,
+    "duration": 1.2139976024627686
+  },
+  "config": {
+    "region": "us-east-1",
+    "regions": [
+      "us-east-1"
+    ],
+    "cache": "~/.cache/cloud-custodian.cache",
+    "profile": null,
+    "account_id": "713287746880",
+    "assume_role": null,
+    "external_id": null,
+    "log_group": null,
+    "tracer": null,
+    "metrics_enabled": null,
+    "metrics": null,
+    "output_dir": ".",
+    "cache_period": 15,
+    "dryrun": false,
+    "authorization_file": null,
+    "subparser": "run",
+    "config": null,
+    "configs": [
+      "invalid_console_login.yml"
+    ],
+    "policy_filters": [],
+    "resource_types": [],
+    "verbose": null,
+    "quiet": null,
+    "debug": false,
+    "skip_validation": false,
+    "command": "c7n.commands.run",
+    "vars": null
+  },
+  "sys-stats": {},
+  "api-stats": {
+    "lambda.GetFunction": 1,
+    "events.DescribeRule": 1,
+    "lambda.AddPermission": 1,
+    "events.ListTargetsByRule": 1
+  },
+  "metrics": []
+}

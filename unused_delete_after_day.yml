@@ -1,0 +1,31 @@
+### Marks security group to be deleted after a day
+policies:
+  - name: security-group-delete
+    resource: security-group
+    description: |
+      Mark Security Group to be deleted next day
+    mode:
+      type: periodic
+      role: arn:aws:iam::713287746880:role/lambda_admin
+      schedule: "rate(1 minute)"
+    filters:
+      - unused 
+    actions:
+      - type: mark-for-op
+        op: delete
+        days: 1
+      - type: notify
+        template: default.html
+        priority_header: 1
+        subject: "Unused Security Group Will Be Deleted -[custodian {{ account }} - {{ region }}]"
+        violation_desc: "Security Group(s) Not used"
+        action_desc: |
+            "Actions Taken: The security group has been deleted since it has not been used"
+        to:
+          - farrukhsadykov@gmail.com
+        owner_absent_contact:
+          - farrukhsadykov@gmail.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/713287746880/first
+          region: us-east-1

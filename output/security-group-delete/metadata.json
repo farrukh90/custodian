@@ -1,0 +1,93 @@
+{
+  "policy": {
+    "name": "security-group-delete",
+    "resource": "security-group",
+    "description": "Mark Security Group to be deleted next day\n",
+    "mode": {
+      "type": "periodic",
+      "role": "arn:aws:iam::713287746880:role/lambda_admin",
+      "schedule": "rate(1 minute)",
+      "tags": {
+        "custodian-info": "mode=periodic:version=0.9.6"
+      }
+    },
+    "filters": [
+      "unused"
+    ],
+    "actions": [
+      {
+        "type": "mark-for-op",
+        "op": "delete",
+        "days": 1
+      },
+      {
+        "type": "notify",
+        "template": "default.html",
+        "priority_header": 1,
+        "subject": "Unused Security Group Will Be Deleted -[custodian {{ account }} - {{ region }}]",
+        "violation_desc": "Security Group(s) Not used",
+        "action_desc": "\"Actions Taken: The security group has been deleted since it has not been used\"\n",
+        "to": [
+          "farrukhsadykov@gmail.com"
+        ],
+        "owner_absent_contact": [
+          "farrukhsadykov@gmail.com"
+        ],
+        "transport": {
+          "type": "sqs",
+          "queue": "https://sqs.us-east-1.amazonaws.com/713287746880/first",
+          "region": "us-east-1"
+        }
+      }
+    ]
+  },
+  "version": "0.9.6",
+  "execution": {
+    "id": "8cb75a98-5d36-410f-8c86-81cc3615254c",
+    "start": 1600860991.5969126,
+    "end_time": 1600860993.741346,
+    "duration": 2.1444332599639893
+  },
+  "config": {
+    "region": "us-east-1",
+    "regions": [
+      "us-east-1"
+    ],
+    "cache": "~/.cache/cloud-custodian.cache",
+    "profile": null,
+    "account_id": "713287746880",
+    "assume_role": null,
+    "external_id": null,
+    "log_group": null,
+    "tracer": null,
+    "metrics_enabled": null,
+    "metrics": null,
+    "output_dir": "output",
+    "cache_period": 15,
+    "dryrun": false,
+    "authorization_file": null,
+    "subparser": "run",
+    "config": null,
+    "configs": [
+      "unused_delete_after_day.yml"
+    ],
+    "policy_filters": [],
+    "resource_types": [],
+    "verbose": null,
+    "quiet": null,
+    "debug": false,
+    "skip_validation": false,
+    "command": "c7n.commands.run",
+    "vars": null
+  },
+  "sys-stats": {},
+  "api-stats": {
+    "lambda.GetFunction": 1,
+    "lambda.UpdateFunctionCode": 1,
+    "lambda.UpdateFunctionConfiguration": 1,
+    "events.DescribeRule": 1,
+    "lambda.AddPermission": 1,
+    "events.ListTargetsByRule": 1
+  },
+  "metrics": []
+}

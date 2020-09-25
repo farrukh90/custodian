@@ -1,0 +1,26 @@
+[
+  {
+    "Description": "u",
+    "GroupName": "unused_2",
+    "IpPermissions": [],
+    "OwnerId": "713287746880",
+    "GroupId": "sg-03e33e63191b33416",
+    "IpPermissionsEgress": [
+      {
+        "IpProtocol": "-1",
+        "IpRanges": [
+          {
+            "CidrIp": "0.0.0.0/0"
+          }
+        ],
+        "Ipv6Ranges": [],
+        "PrefixListIds": [],
+        "UserIdGroupPairs": []
+      }
+    ],
+    "VpcId": "vpc-0419a39ce3b082e9e",
+    "c7n:MatchedFilters": [
+      "GroupName"
+    ]
+  }
+]

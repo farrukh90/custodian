@@ -1,0 +1,70 @@
+{
+  "policy": {
+    "name": "account-service-limits",
+    "resource": "account",
+    "filters": [
+      {
+        "type": "service-limit",
+        "threshold": 50
+      }
+    ],
+    "actions": [
+      {
+        "type": "request-limit-increase",
+        "percent-increase": 25
+      }
+    ]
+  },
+  "version": "0.9.6",
+  "execution": {
+    "id": "7fc3fc77-e201-4d21-baa7-b76a1d7487fd",
+    "start": 1601348726.1984777,
+    "end_time": 1601348726.96473,
+    "duration": 0.7662522792816162
+  },
+  "config": {
+    "region": "us-east-2",
+    "regions": [
+      "us-east-2"
+    ],
+    "cache": "~/.cache/cloud-custodian.cache",
+    "profile": null,
+    "account_id": "713287746880",
+    "assume_role": null,
+    "external_id": null,
+    "log_group": null,
+    "tracer": null,
+    "metrics_enabled": null,
+    "metrics": null,
+    "output_dir": ".",
+    "cache_period": 15,
+    "dryrun": false,
+    "authorization_file": null,
+    "subparser": "run",
+    "config": null,
+    "configs": [
+      "service_limit.yml"
+    ],
+    "policy_filters": [],
+    "resource_types": [],
+    "verbose": null,
+    "quiet": null,
+    "debug": false,
+    "skip_validation": false,
+    "command": "c7n.commands.run",
+    "vars": null
+  },
+  "sys-stats": {},
+  "api-stats": {
+    "iam.ListAccountAliases": 1,
+    "support.DescribeTrustedAdvisorChecks": 1
+  },
+  "metrics": [
+    {
+      "MetricName": "PolicyException",
+      "Timestamp": "2020-09-29T03:05:26.964702",
+      "Value": 1,
+      "Unit": "Count"
+    }
+  ]
+}

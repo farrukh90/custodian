@@ -1,0 +1,116 @@
+{
+  "policy": {
+    "name": "sec-group-non-compliant",
+    "resource": "security-group",
+    "filters": [
+      {
+        "type": "config-compliance",
+        "rules": [
+          "restricted-ssh"
+        ],
+        "states": [
+          "NON_COMPLIANT"
+        ]
+      }
+    ],
+    "mode": {
+      "type": "config-rule",
+      "role": "arn:aws:iam::713287746880:role/lambda_admin",
+      "tags": {
+        "custodian-info": "mode=config-rule:version=0.9.6"
+      }
+    },
+    "actions": [
+      {
+        "type": "notify",
+        "template": "default.html",
+        "priority_header": 1,
+        "subject": "Unused Security Group Deleted -[custodian {{ account }} - {{ region }}]",
+        "violation_desc": "Security Group(s) Which Had Rules Open To The World:",
+        "action_desc": "\"Security Group is NonCompliant\"\n",
+        "to": [
+          "farrukhsadykov@gmail.com"
+        ],
+        "owner_absent_contact": [
+          "farrukhsadykov@gmail.com"
+        ],
+        "transport": {
+          "type": "sqs",
+          "queue": "https://sqs.us-east-1.amazonaws.com/713287746880/first",
+          "region": "us-east-1"
+        }
+      },
+      {
+        "type": "set-permissions",
+        "remove-ingress": "matched",
+        "add-ingress": [
+          {
+            "IpPermissions": [
+              {
+                "IpProtocol": "TCP",
+                "FromPort": 22,
+                "ToPort": 22,
+                "IpRanges": [
+                  {
+                    "Description": "Ops SSH Access",
+                    "CidrIp": "1.1.1.1/32"
+                  },
+                  {
+                    "Description": "Security SSH Access",
+                    "CidrIp": "2.2.2.2/32"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "version": "0.9.6",
+  "execution": {
+    "id": "59009c38-ae0e-4f18-abff-2b5da7ea1512",
+    "start": 1601218231.5619795,
+    "end_time": 1601218233.1428313,
+    "duration": 1.5808517932891846
+  },
+  "config": {
+    "region": "us-east-1",
+    "regions": [
+      "us-east-1"
+    ],
+    "cache": "~/.cache/cloud-custodian.cache",
+    "profile": null,
+    "account_id": "713287746880",
+    "assume_role": null,
+    "external_id": null,
+    "log_group": null,
+    "tracer": null,
+    "metrics_enabled": null,
+    "metrics": null,
+    "output_dir": ".",
+    "cache_period": 15,
+    "dryrun": false,
+    "authorization_file": null,
+    "subparser": "run",
+    "config": null,
+    "configs": [
+      "non_compliant.yml"
+    ],
+    "policy_filters": [],
+    "resource_types": [],
+    "verbose": null,
+    "quiet": null,
+    "debug": false,
+    "skip_validation": false,
+    "command": "c7n.commands.run",
+    "vars": null
+  },
+  "sys-stats": {},
+  "api-stats": {
+    "lambda.GetFunction": 1,
+    "lambda.UpdateFunctionCode": 1,
+    "config.DescribeConfigRules": 1
+  },
+  "metrics": []
+}

@@ -1,0 +1,103 @@
+{
+  "policy": {
+    "name": "Redis-Port-Remove",
+    "resource": "security-group",
+    "mode": {
+      "type": "periodic",
+      "role": "arn:aws:iam::713287746880:role/lambda_admin",
+      "schedule": "rate(1 minute)",
+      "tags": {
+        "custodian-info": "mode=periodic:version=0.9.6"
+      }
+    },
+    "filters": [
+      {
+        "type": "ingress",
+        "FromPort": 6379,
+        "ToPort": 6379,
+        "Cidr": "0.0.0.0/0"
+      }
+    ],
+    "actions": [
+      {
+        "type": "set-permissions",
+        "remove-ingress": "matched",
+        "add-ingress": [
+          {
+            "IpPermissions": [
+              {
+                "IpProtocol": "TCP",
+                "FromPort": 6379,
+                "ToPort": 6379,
+                "IpRanges": [
+                  {
+                    "Description": "Ops SSH Access",
+                    "CidrIp": "10.2.0.0/16"
+                  },
+                  {
+                    "Description": "Ops SSH Access",
+                    "CidrIp": "10.1.0.0/16"
+                  },
+                  {
+                    "Description": "Ops SSH Access",
+                    "CidrIp": "100.100.0.0/16"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "version": "0.9.6",
+  "execution": {
+    "id": "c0e5a655-f8d4-455f-b0ec-13615e66abb1",
+    "start": 1601269259.2318974,
+    "end_time": 1601269261.624517,
+    "duration": 2.3926196098327637
+  },
+  "config": {
+    "region": "us-east-2",
+    "regions": [
+      "us-east-2"
+    ],
+    "cache": "~/.cache/cloud-custodian.cache",
+    "profile": null,
+    "account_id": "713287746880",
+    "assume_role": null,
+    "external_id": null,
+    "log_group": null,
+    "tracer": null,
+    "metrics_enabled": null,
+    "metrics": null,
+    "output_dir": ".",
+    "cache_period": 15,
+    "dryrun": false,
+    "authorization_file": null,
+    "subparser": "run",
+    "config": null,
+    "configs": [
+      "remove_6379.yml"
+    ],
+    "policy_filters": [],
+    "resource_types": [],
+    "verbose": null,
+    "quiet": null,
+    "debug": false,
+    "skip_validation": false,
+    "command": "c7n.commands.run",
+    "vars": null
+  },
+  "sys-stats": {},
+  "api-stats": {
+    "lambda.GetFunction": 1,
+    "lambda.UpdateFunctionCode": 1,
+    "lambda.TagResource": 1,
+    "events.DescribeRule": 1,
+    "events.PutRule": 1,
+    "lambda.AddPermission": 1,
+    "events.ListTargetsByRule": 1
+  },
+  "metrics": []
+}

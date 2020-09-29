@@ -1,0 +1,6 @@
+2020-09-28 04:50:25,820 - custodian.policy - INFO - policy:Redis-Port-Remove resource:security-group region:us-east-2 count:0 time:0.00
+2020-09-28 04:53:11,199 - custodian.policy - INFO - Provisioning policy lambda: Redis-Port-Remove region: us-east-2
+2020-09-28 04:53:11,760 - custodian.serverless - INFO - Publishing custodian policy lambda function custodian-Redis-Port-Remove
+2020-09-28 04:59:59,348 - custodian.policy - INFO - Provisioning policy lambda: Redis-Port-Remove region: us-east-2
+2020-09-28 04:59:59,882 - custodian.serverless - INFO - Publishing custodian policy lambda function custodian-Redis-Port-Remove
+2020-09-28 05:00:59,244 - custodian.policy - INFO - Provisioning policy lambda: Redis-Port-Remove region: us-east-2

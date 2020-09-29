@@ -4,8 +4,11 @@ policies:
     resource: security-group
     filters:
       - type: config-compliance
-        rules: [my_other_config_rule, some_other_rule]
+        rules: [restricted-ssh]
         states: [NON_COMPLIANT]
+    mode:
+      type: config-rule
+      role: arn:aws:iam::713287746880:role/lambda_admin
     actions:
       - type: notify
         template: default.html
@@ -13,7 +16,7 @@ policies:
         subject: "Unused Security Group Deleted -[custodian {{ account }} - {{ region }}]"
         violation_desc: "Security Group(s) Which Had Rules Open To The World:"
         action_desc: |
-            "Actions Taken: The security group has been deleted since it has not been used"
+            "Security Group is NonCompliant"
         to:
           - farrukhsadykov@gmail.com
         owner_absent_contact:
@@ -22,3 +25,15 @@ policies:
           type: sqs
           queue: https://sqs.us-east-1.amazonaws.com/713287746880/first
           region: us-east-1
+      - type: set-permissions
+        remove-ingress: matched     
+        add-ingress:
+          - IpPermissions:
+              - IpProtocol: TCP
+                FromPort: 22
+                ToPort: 22
+                IpRanges:
+                  - Description: Ops SSH Access
+                    CidrIp: "1.1.1.1/32"
+                  - Description: Security SSH Access
+                    CidrIp: "2.2.2.2/32"

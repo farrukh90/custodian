@@ -1,0 +1,34 @@
+policies:
+  - name: Redis-Port-Remove
+    resource: security-group
+    mode:
+        type: periodic
+        role: arn:aws:iam::713287746880:role/lambda_admin
+        schedule: "rate(1 minute)"
+        # events:
+        #   - source: ec2.amazonaws.com
+        #     event: AuthorizeSecurityGroupIngress
+        #     ids: "requestParameters.groupId"
+        #   - source: ec2.amazonaws.com
+        #     event: AuthorizeSecurityGroupEgress
+        #     ids: "requestParameters.groupId"
+    filters:
+      - type: ingress
+        FromPort: 6379
+        ToPort: 6379
+        Cidr: "0.0.0.0/0"
+    actions:
+     - type: set-permissions
+       remove-ingress: matched
+       add-ingress:
+         - IpPermissions:
+            - IpProtocol: TCP
+              FromPort: 6379
+              ToPort: 6379
+              IpRanges:
+                - Description: Ops SSH Access
+                  CidrIp: "10.2.0.0/16"
+                - Description: Ops SSH Access
+                  CidrIp: "10.1.0.0/16"
+                - Description: Ops SSH Access
+                  CidrIp: "100.100.0.0/16"

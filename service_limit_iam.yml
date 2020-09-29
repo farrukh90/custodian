@@ -1,0 +1,9 @@
+policies:
+  - name: account-service-limits
+    resource: account
+    region: us-east-1
+    filters:
+      - type: service-limit
+        services:
+          - IAM
+        threshold: 50

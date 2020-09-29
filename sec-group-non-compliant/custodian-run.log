@@ -1,0 +1,5 @@
+2020-09-27 14:31:01,700 - custodian.policy - INFO - policy:sec-group-non-compliant resource:security-group region:us-east-1 count:0 time:0.88
+2020-09-27 14:31:56,193 - custodian.policy - INFO - policy:sec-group-non-compliant resource:security-group region:us-east-1 count:0 time:1.13
+2020-09-27 14:36:17,999 - custodian.policy - INFO - Provisioning policy lambda: sec-group-non-compliant region: us-east-1
+2020-09-27 14:36:18,495 - custodian.serverless - INFO - Publishing custodian policy lambda function custodian-sec-group-non-compliant
+2020-09-27 14:50:31,574 - custodian.policy - INFO - Provisioning policy lambda: sec-group-non-compliant region: us-east-1

@@ -1,0 +1,5 @@
+2020-09-29 08:14:29,335 - custodian.policy - INFO - Provisioning policy lambda: s3-configure-standards-real-time region: us-east-1
+2020-09-29 08:14:29,777 - custodian.serverless - INFO - Publishing custodian policy lambda function custodian-s3-configure-standards-real-time
+2020-09-29 08:15:05,572 - custodian.policy - INFO - Provisioning policy lambda: s3-configure-standards-real-time region: us-east-1
+2020-09-29 08:15:05,974 - custodian.serverless - INFO - Publishing custodian policy lambda function custodian-s3-configure-standards-real-time
+2020-09-29 08:21:33,929 - custodian.policy - INFO - Provisioning policy lambda: s3-configure-standards-real-time region: us-east-1
